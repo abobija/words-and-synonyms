@@ -76,9 +76,9 @@ public class WordDao {
     }
 
     /**
-     * Find word index in database
+     * Find word in database
      *
-     * @param word word which need to be found
+     * @param word - word which need to be found
      * @return index of founded word or -1 if nothing is found
      */
     public Word findWord(String word) {
