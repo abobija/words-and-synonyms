@@ -1,0 +1,12 @@
+body {
+    padding: 100px;
+}
+
+#searchResultsList {
+    margin-top: 50px;
+}
+
+#notInDatabaseInfo {
+    margin-top: 10px;
+    color: #5d5d5d;
+}
