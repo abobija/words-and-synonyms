@@ -17,3 +17,11 @@ Run commands:
 mvn package
 java -jar target/words-and-synonyms-2.0.jar
 ````
+
+## Using Docker container
+
+Run command:
+
+```
+docker run --rm -it -p 8080:8080 abobija/words-and-synonyms
+```
