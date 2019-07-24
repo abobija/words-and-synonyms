@@ -151,6 +151,27 @@ public class WordDao {
 
         return results;
     }
+    
+    /**
+     * 
+     * @param word - Word of which synonyms will be searched
+     * @return List of synonyms of word
+     */
+    public List<Word> synonyms(Word word) {
+    	List<Word> results = new LinkedList<>();
+    	
+    	if(word != null) {
+    		for(Relation rel : relations) {
+                if(rel.getWord1() == word) {
+                    results.add(rel.getWord2());
+                } else if(rel.getWord2() == word) {
+                    results.add(rel.getWord1());
+                }
+            }
+    	}
+    	
+        return results;
+    }
 
     /**
      * Searching for synonyms of a word
@@ -159,20 +180,6 @@ public class WordDao {
      * @return List of synonyms for a word
      */
     public List<Word> synonyms(String word) {
-        List<Word> results = new LinkedList<>();
-
-        Word dbWord = findWord(word);
-
-        if(dbWord != null) {
-            for(Relation rel : relations) {
-                if(rel.getWord1() == dbWord) {
-                    results.add(rel.getWord2());
-                } else if(rel.getWord2() == dbWord) {
-                    results.add(rel.getWord1());
-                }
-            }
-        }
-
-        return results;
+        return synonyms(findWord(word));
     }
 }
