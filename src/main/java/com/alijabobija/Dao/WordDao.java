@@ -109,17 +109,17 @@ public class WordDao {
      * @param word value of word
      * @param synonym value of synonym
      * @return return Word object of created synonym
-     * @throws Exception Trows exception if word does not exist in database
+     * @throws Exception If word does not exist in database
      */
     public Word addSynonymForWord(String word, String synonym) throws Exception {
         Word dbWord = findWord(word);
-
+        
         if(dbWord == null) {
             throw new Exception(String.format("Word <%s> does not exist in database", word));
         }
-
+        
         Word dbSynonym = findWord(synonym);
-
+        
         if(dbSynonym == null) {
             addWord(synonym);
             dbSynonym = findWord(synonym);
