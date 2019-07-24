@@ -1,5 +1,6 @@
 package com.alijabobija.Dao;
 
+import com.alijabobija.Entity.Relation;
 import com.alijabobija.Entity.Word;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ public class WordDao {
      * Relations between words
      * representing relations between words and synonyms
      */
-    private static List<int[]> relations;
+    private static List<Relation> relations;
 
     /**
      * Insert some dummy default data...
@@ -48,7 +49,7 @@ public class WordDao {
         relations = new LinkedList<>();
 
         // Insert some dummy data
-
+        
         words.add(new Word("Clean"));
         words.add(new Word("Wash"));
         words.add(new Word("Run"));
@@ -57,10 +58,17 @@ public class WordDao {
         words.add(new Word("Make"));
 
         // Make Wash as synonym of Clean
-        relations.add(new int[] { 0, 1 });
+        addRelation(words.get(0), words.get(1));
 
         // Make Create as synonym of Make
-        relations.add(new int[] { 5, 4 });
+        addRelation(words.get(5), words.get(4));
+    }
+    
+    private static void addRelation(Word w1, Word w2) {
+        // TODO:
+        // Before creating relation, first check if relation already exists?
+
+        relations.add(new Relation(w1, w2));
     }
 
     /**
@@ -69,14 +77,14 @@ public class WordDao {
      * @param word word which need to be found
      * @return index of founded word or -1 if nothing is found
      */
-    public int findWordIndex(String word) {
+    public Word findWord(String word) {
         for(int i = 0; i < words.size(); i++) {
             if(words.get(i).equals(word)) {
-                return i;
+                return words.get(i);
             }
         }
 
-        return -1;
+        return null;
     }
 
     /**
@@ -85,10 +93,10 @@ public class WordDao {
      * @param word value of word
      */
     public Word addWord(String word) throws Exception {
-        if(findWordIndex(word) != -1) {
+        if(findWord(word) != null) {
             throw new Exception(String.format("Word <%s> already exist in database", word));
         }
-
+        
         Word _word = new Word(word);
         words.add(_word);
 
@@ -104,25 +112,22 @@ public class WordDao {
      * @throws Exception Trows exception if word does not exist in database
      */
     public Word addSynonymForWord(String word, String synonym) throws Exception {
-        int wordIndex = findWordIndex(word);
+        Word dbWord = findWord(word);
 
-        if(wordIndex == -1) {
+        if(dbWord == null) {
             throw new Exception(String.format("Word <%s> does not exist in database", word));
         }
 
-        int synonymIndex = findWordIndex(synonym);
+        Word dbSynonym = findWord(synonym);
 
-        if(synonymIndex == -1) {
+        if(dbSynonym == null) {
             addWord(synonym);
-            synonymIndex = findWordIndex(synonym);
+            dbSynonym = findWord(synonym);
         }
+        
+        addRelation(dbWord, dbSynonym);
 
-        // TODO:
-        // Before creating relation, first check if relation already exists?
-
-        relations.add(new int[]{ wordIndex, synonymIndex });
-
-        return words.get(synonymIndex);
+        return dbSynonym;
     }
 
     /**
@@ -152,14 +157,14 @@ public class WordDao {
     public List<Word> synonyms(String word) {
         List<Word> results = new LinkedList<>();
 
-        int wordIndex = findWordIndex(word);
+        Word dbWord = findWord(word);
 
-        if(wordIndex != -1) {
-            for(int[] rel : relations) {
-                if(rel[0] == wordIndex) {
-                    results.add(words.get(rel[1]));
-                } else if(rel[0] == wordIndex) {
-                    results.add(words.get(rel[1]));
+        if(dbWord != null) {
+            for(Relation rel : relations) {
+                if(rel.getWord1() == dbWord) {
+                    results.add(rel.getWord2());
+                } else if(rel.getWord2() == dbWord) {
+                    results.add(rel.getWord1());
                 }
             }
         }
