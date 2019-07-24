@@ -13,5 +13,5 @@ Run commands:
 
 ```
 mvn package
-java -jar target/target/words-and-synonyms-2.0.jar
+java -jar target/words-and-synonyms-2.0.jar
 ````
