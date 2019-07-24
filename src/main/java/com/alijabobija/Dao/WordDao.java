@@ -112,7 +112,7 @@ public class WordDao {
      *
      * @param word value of word
      * @param synonym value of synonym
-     * @return return Word object of created synonym
+     * @return Word object of created synonym
      * @throws Exception If word does not exist in database
      */
     public Word addSynonymForWord(String word, String synonym) throws Exception {
@@ -122,14 +122,25 @@ public class WordDao {
             throw new Exception(String.format("Word <%s> does not exist in database", word));
         }
         
-        Word dbSynonym = findWord(synonym);
+        return addSynonymForWord(dbWord, synonym);
+    }
+    
+    /**
+     * 
+     * @param word word
+     * @param synonym synonym that needs to be added
+     * @return Word object of created synonym
+     * @throws Exception If word does not exist in database
+     */
+    public Word addSynonymForWord(Word word, String synonym) throws Exception {
+    	Word dbSynonym = findWord(synonym);
         
         if(dbSynonym == null) {
             addWord(synonym);
             dbSynonym = findWord(synonym);
         }
         
-        addRelation(dbWord, dbSynonym);
+        addRelation(word, dbSynonym);
 
         return dbSynonym;
     }

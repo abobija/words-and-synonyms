@@ -16,72 +16,89 @@ public class WordServiceTest {
     @Autowired
     private WordService wordService;
 
-    @Test
     /**
      * Comparing two identically words
      */
+    @Test
     public void compareTwoMatchingWords_CaseSensitive() {
-        assertThat(
-                new Word("Clean").like("Clean")
-        ).isEqualTo(true);
+        assertThat(new Word("Clean").like("Clean")).isTrue();
     }
 
-    @Test
     /**
      * Comparing two words which only difference is that the first one is capitalize
      * and second one is all-lower-letter word
      */
+    @Test
     public void compareTwoMatchingWords_CaseNotSensitive() {
-        assertThat(
-                new Word("Clean").like("clean")
-        ).isEqualTo(true);
+        assertThat(new Word("Clean").like("clean")).isTrue();
     }
 
-    @Test
     /**
      * Comparing two words
      * First word contains second one
      */
+    @Test
     public void compareTwoMatchingWords_PartOfWord() {
-        assertThat(
-                new Word("Clean").like("lea")
-        ).isEqualTo(true);
+        assertThat(new Word("Clean").like("lea")).isTrue();
     }
 
-    @Test
     /**
      * Test for successfully adding new word
      */
+    @Test
     public void addWordTest_Success() throws Exception  {
-        wordService.addWord("Programming");
+        Word word = wordService.addWord("Programming");
+        
+        assertThat(word.getValue().equals("Programming")).isTrue();
     }
 
-    @Test(expected = Exception.class)
     /**
      * Test which will fail in time of adding new word
      */
+    @Test(expected = Exception.class)
     public void addWordTest_DuplicateWordRestriction() throws Exception {
         wordService.addWord("Test");
         wordService.addWord("Test");
     }
 
-    @Test
     /**
      * Adding new synonym for existing word
      */
+    @Test
     public void addSynonymForWord_Success() throws Exception {
         wordService.addWord("Eat_X");
         wordService.addSynonymForWord("Eat_X", "Lunch");
 
-        assertThat(wordService.synonyms("Eat_X").size() > 0)
-                .isEqualTo(true);
+        assertThat(wordService.synonyms("Eat_X").size() == 1).isTrue();
     }
 
-    @Test(expected = Exception.class)
     /**
      * Trying to add synonym to non-existing word
      */
+    @Test(expected = Exception.class)
     public void addSynonymForWord_NonExistingWord() throws Exception {
         wordService.addSynonymForWord("NonExistingWord", "Synonym");
+    }
+
+    /**
+     * Testing if word has added synonym
+     */
+    @Test
+    public void wordHasAddedSynonym() throws Exception {
+    	Word word = wordService.addWord("Super");
+    	Word synonym = wordService.addSynonymForWord(word, "Awesome");
+    	
+    	assertThat(wordService.synonyms(word).contains(synonym)).isTrue();
+    }
+
+    /**
+     * Test if synonym of word has word as synonym as well
+     */
+    @Test
+    public void synonymOfWordHasWordAsSynonym() throws Exception {
+    	Word word = wordService.addWord("Conversation");
+    	Word synonym = wordService.addSynonymForWord(word, "Talk");
+    	
+    	assertThat(wordService.synonyms(synonym).contains(word)).isTrue();
     }
 }
