@@ -101,4 +101,17 @@ public class WordServiceTest {
     	
     	assertThat(wordService.synonyms(synonym).contains(word)).isTrue();
     }
+    
+    /**
+     * Tests if synonyms of word is synonyms to each other at the same time
+     * @throws Exception
+     */
+    @Test
+    public void oneSynonymOfWordIsSynonymForOtherSynonymOfWord() throws Exception {
+    	Word word = wordService.addWord("Appearance");
+    	Word synonym1 = wordService.addSynonymForWord(word, "Demonstration");
+    	Word synonym2 = wordService.addSynonymForWord(word, "Presentation");
+    	
+    	assertThat(wordService.synonyms(synonym2).contains(synonym1)).isTrue();
+    }
 }
