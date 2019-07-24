@@ -1,6 +1,10 @@
 # words-and-synonyms
 Spring boot Words and Synonyms application
 
+## ToDo
+
+- [ ] There is one test that fails. Need to resolve the problem when one word have two synonyms. In that case first synonym need to be the synonym of another synonym in the same time.
+
 ## Preview
 
 Either you choose Maven method or method with Docker Container, at the end of the day open browser and navigate to `http://localhost:8080`.
@@ -41,5 +45,5 @@ _Click on image..._
 [![Words And Synonyms - Java Spring Boot](https://img.youtube.com/vi/Hd75inwVoBs/mqdefault.jpg)](https://www.youtube.com/watch?v=Hd75inwVoBs)
 
 ## Author
-
+ 
 [Alija Bobija](http://abobija.com)
