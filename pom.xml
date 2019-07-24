@@ -7,6 +7,10 @@
     <groupId>com.alijabobija</groupId>
     <artifactId>words-and-synonyms</artifactId>
     <version>2.0</version>
+    
+    <packaging>jar</packaging>
+    <name>words-and-synonyms</name>
+    <description>Words and Synonyms</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
