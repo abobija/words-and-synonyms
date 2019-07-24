@@ -42,6 +42,7 @@ public class WordDao {
      * [4] Create
      * [5] Make
      *      | [4] Create
+     *      | [3] Build
      * -----------------------
      */
     static {
@@ -59,6 +60,9 @@ public class WordDao {
 
         // Make Wash as synonym of Clean
         addRelation(words.get(0), words.get(1));
+        
+        // Make Build as synonym of Make
+        addRelation(words.get(5), words.get(3));
 
         // Make Create as synonym of Make
         addRelation(words.get(5), words.get(4));
