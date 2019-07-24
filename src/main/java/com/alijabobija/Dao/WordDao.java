@@ -1,7 +1,6 @@
 package com.alijabobija.Dao;
 
 import com.alijabobija.Entity.Word;
-import javafx.util.Pair;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
@@ -25,7 +24,7 @@ public class WordDao {
      * Relations between words
      * representing relations between words and synonyms
      */
-    private static List<Pair<Integer, Integer>> synonymsRelations;
+    private static List<int[]> relations;
 
     /**
      * Insert some dummy default data...
@@ -46,7 +45,7 @@ public class WordDao {
      */
     static {
         words = new LinkedList<>();
-        synonymsRelations = new LinkedList<>();
+        relations = new LinkedList<>();
 
         // Insert some dummy data
 
@@ -58,10 +57,10 @@ public class WordDao {
         words.add(new Word("Make"));
 
         // Make Wash as synonym of Clean
-        synonymsRelations.add(new Pair<>(0, 1));
+        relations.add(new int[] { 0, 1 });
 
         // Make Create as synonym of Make
-        synonymsRelations.add(new Pair<>(5, 4));
+        relations.add(new int[] { 5, 4 });
     }
 
     /**
@@ -121,7 +120,7 @@ public class WordDao {
         // TODO:
         // Before creating relation, first check if relation already exists?
 
-        synonymsRelations.add(new Pair<>(wordIndex, synonymIndex));
+        relations.add(new int[]{ wordIndex, synonymIndex });
 
         return words.get(synonymIndex);
     }
@@ -156,11 +155,11 @@ public class WordDao {
         int wordIndex = findWordIndex(word);
 
         if(wordIndex != -1) {
-            for(Pair<Integer, Integer> relation : synonymsRelations) {
-                if(relation.getKey() == wordIndex) {
-                    results.add(words.get(relation.getValue()));
-                } else if(relation.getValue() == wordIndex) {
-                    results.add(words.get(relation.getKey()));
+            for(int[] rel : relations) {
+                if(rel[0] == wordIndex) {
+                    results.add(words.get(rel[1]));
+                } else if(rel[0] == wordIndex) {
+                    results.add(words.get(rel[1]));
                 }
             }
         }

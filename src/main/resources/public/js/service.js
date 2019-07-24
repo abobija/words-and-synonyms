@@ -16,7 +16,7 @@ Service = {
         $.getJSON('service/words/synonyms/' + word, callback);
     },
 
-    addWord: (word, successCallback, erorCallback) => {
+    addWord: (word, successCallback, errorCallback) => {
         $.post('service/words/add', {
             word: word
         })
