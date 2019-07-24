@@ -22,6 +22,12 @@ java -jar target/words-and-synonyms-2.0.jar
 docker run --rm -it -p 8080:8080 abobija/words-and-synonyms
 ```
 
+## Run Tests
+
+```
+mvn test
+```
+
 ## Build Docker Image
 
 ```
