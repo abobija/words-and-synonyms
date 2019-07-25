@@ -19,7 +19,7 @@ Either you choose Maven method or method with Docker Container, at the end of th
 
 ```
 mvn package
-java -jar target/words-and-synonyms-2.0.jar
+java -jar target/words-and-synonyms-3.0.jar
 ````
 
 ### Using Docker Container
@@ -37,6 +37,7 @@ mvn test
 ## Build Docker Image
 
 ```
+mvn package
 docker build -t name_of_image .
 ```
 
