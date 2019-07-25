@@ -1,6 +1,12 @@
 # words-and-synonyms
 Application written in Java using Spring Boot framework. Application offers a way of adding new words and adding synonyms to existing words. Besides of creating new words and synonyms, user is able to search words as well.
 
+## Demo
+
+_Click on image..._
+
+[![Words And Synonyms - Java Spring Boot](https://img.youtube.com/vi/Hd75inwVoBs/mqdefault.jpg)](https://www.youtube.com/watch?v=Hd75inwVoBs)
+
 ## Preview
 
 Either you choose Maven method or method with Docker Container, at the end of the day open browser and navigate to `http://localhost:8080`.
@@ -33,12 +39,6 @@ mvn test
 ```
 docker build -t name_of_image .
 ```
-
-## Demo
-
-_Click on image..._
-
-[![Words And Synonyms - Java Spring Boot](https://img.youtube.com/vi/Hd75inwVoBs/mqdefault.jpg)](https://www.youtube.com/watch?v=Hd75inwVoBs)
 
 ## Author
  
