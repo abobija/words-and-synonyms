@@ -1,5 +1,5 @@
 # words-and-synonyms
-Spring boot Words and Synonyms application
+Application written in Java using Spring Boot framework. Application offers a way of adding new words and adding synonyms to existing words. Besides of creating new words and synonyms, user is able to search words as well.
 
 ## Preview
 
