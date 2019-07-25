@@ -79,14 +79,14 @@ public class WordDao {
      * Find word in database
      *
      * @param word - word which need to be found
-     * @return index of founded word or -1 if nothing is found
+     * @return founded word or null if nothing is found
      */
     public Word findWord(String word) {
-        for(int i = 0; i < words.size(); i++) {
-            if(words.get(i).equals(word)) {
-                return words.get(i);
-            }
-        }
+    	for(Word w : words) {
+    		if(w.equals(word)) {
+    			return w;
+    		}
+    	}
 
         return null;
     }
@@ -95,6 +95,7 @@ public class WordDao {
      * Insert word into database
      *
      * @param word value of word
+     * @return added word
      */
     public Word addWord(String word) throws Exception {
         if(findWord(word) != null) {
