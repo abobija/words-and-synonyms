@@ -10,6 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class WordServiceTest {
@@ -47,9 +49,9 @@ public class WordServiceTest {
      */
     @Test
     public void addWordTest_Success() throws Exception  {
-        Word word = wordService.addWord("Programming");
+        wordService.addWord("Programming");
         
-        assertThat(word.getValue().equals("Programming")).isTrue();
+        assertThat(wordService.findWord("Programming") != null).isTrue();
     }
 
     /**
@@ -66,10 +68,12 @@ public class WordServiceTest {
      */
     @Test
     public void addSynonymForWord_Success() throws Exception {
-        wordService.addWord("Eat_X");
-        wordService.addSynonymForWord("Eat_X", "Lunch");
+        Word word = wordService.addWord("Eat_X");
+        Word synonym = wordService.addSynonymForWord("Eat_X", "Lunch");
+        
+        List<Word> synonyms = wordService.synonyms(word);
 
-        assertThat(wordService.synonyms("Eat_X").size() == 1).isTrue();
+        assertThat(synonyms.size() == 1 && synonyms.contains(synonym)).isTrue();
     }
 
     /**
@@ -78,17 +82,6 @@ public class WordServiceTest {
     @Test(expected = Exception.class)
     public void addSynonymForWord_NonExistingWord() throws Exception {
         wordService.addSynonymForWord("NonExistingWord", "Synonym");
-    }
-
-    /**
-     * Testing if word has added synonym
-     */
-    @Test
-    public void wordHasAddedSynonym() throws Exception {
-    	Word word = wordService.addWord("Super");
-    	Word synonym = wordService.addSynonymForWord(word, "Awesome");
-    	
-    	assertThat(wordService.synonyms(word).contains(synonym)).isTrue();
     }
 
     /**
@@ -108,9 +101,9 @@ public class WordServiceTest {
      */
     @Test
     public void oneSynonymOfWordIsSynonymForOtherSynonymOfWord() throws Exception {
-    	Word word = wordService.addWord("Appearance");
-    	Word synonym1 = wordService.addSynonymForWord(word, "Demonstration");
-    	Word synonym2 = wordService.addSynonymForWord(word, "Presentation");
+    	Word word = wordService.addWord("Super");
+    	Word synonym1 = wordService.addSynonymForWord(word, "Awesome");
+    	Word synonym2 = wordService.addSynonymForWord(word, "Great");
     	
     	assertThat(wordService.synonyms(synonym2).contains(synonym1)).isTrue();
     }

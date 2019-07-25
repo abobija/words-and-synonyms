@@ -48,6 +48,15 @@ public class WordService {
     }
     
     /**
+     * Find word
+     * @param word - word that needs to be found
+     * @return Word or null if nothing is found
+     */
+    public Word findWord(String word) {
+    	return wordDao.findWord(word);
+    }
+    
+    /**
      * Search for words that match keyword
      * @param keyword
      * @return List of founded words
