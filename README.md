@@ -1,10 +1,6 @@
 # words-and-synonyms
 Spring boot Words and Synonyms application
 
-## ToDo
-
-- [ ] There is one test that fails. Need to resolve the problem when one word have two synonyms. In that case first synonym need to be the synonym of another synonym in the same time.
-
 ## Preview
 
 Either you choose Maven method or method with Docker Container, at the end of the day open browser and navigate to `http://localhost:8080`.

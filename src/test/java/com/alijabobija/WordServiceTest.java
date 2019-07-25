@@ -104,7 +104,11 @@ public class WordServiceTest {
     	Word word = wordService.addWord("Super");
     	Word synonym1 = wordService.addSynonymForWord(word, "Awesome");
     	Word synonym2 = wordService.addSynonymForWord(word, "Great");
+    	Word synonym3 =	wordService.addSynonymForWord(synonym1, "Outstanding");
     	
-    	assertThat(wordService.synonyms(synonym2).contains(synonym1)).isTrue();
+    	List<Word> synonyms = wordService.synonyms(synonym2);
+    	
+    	assertThat(synonyms.size() == 3 && synonyms.contains(word) 
+    			&& synonyms.contains(synonym1) && synonyms.contains(synonym3)).isTrue();
     }
 }

@@ -165,23 +165,40 @@ public class WordDao {
     }
     
     /**
+     * Fetch synonyms for word
+     * @param word Word which synonyms needs to be fetched
+     * @param results Reference to results list
+     */
+    private void fetchSynonyms(Word word, List<Word> results) {
+    	if(results.contains(word)) {
+    		return;
+    	}
+    	
+    	results.add(word);
+    	
+    	if(word != null) {
+    		for(Relation rel : relations) {
+                if(rel.getWord1() == word) {
+                	fetchSynonyms(rel.getWord2(), results);
+                } else if(rel.getWord2() == word) {
+                	fetchSynonyms(rel.getWord1(), results);
+                }
+            }
+    	}
+    }
+    
+    /**
      * 
      * @param word - Word of which synonyms will be searched
      * @return List of synonyms of word
      */
     public List<Word> synonyms(Word word) {
-    	List<Word> results = new LinkedList<>();
+    	List<Word> results = new LinkedList<Word>();
     	
-    	if(word != null) {
-    		for(Relation rel : relations) {
-                if(rel.getWord1() == word) {
-                    results.add(rel.getWord2());
-                } else if(rel.getWord2() == word) {
-                    results.add(rel.getWord1());
-                }
-            }
-    	}
-    	
+        fetchSynonyms(word, results);
+        
+        results.remove(0);
+        
         return results;
     }
 
